@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<robot name="my_rb1_robot">
+    <!-- LINK DEFINITIONS -->
+    <!-- Base link -->
+    <link name="base_link">
+        <!-- Base link visual properties -->
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.25" length="0.3"/>
+            </geometry>
+            <material name="Base">
+                <color rgba="0.1373 0.1373 0.1373 1"/>
+            </material>
+        </visual>
+        <!-- Base link collision properties -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.25" length="0.3"/>
+            </geometry>
+        </collision>
+        <!-- Base link inertial properties -->
+        <inertial>
+            <mass value="22" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.50875" ixy="0" ixz="0" iyy="0.50875" iyz="0" izz="0.11458" />
+        </inertial>
+    </link>
+    <!-- Base footprint -->
+    <link name="base_footprint">
+    </link>
+    <!-- Front laser -->
+    <link name="front_laser">
+    </link>
+    <!-- Left wheel --> 
+    <link name="left_wheel">
+        <!-- Left wheel visual properties -->
+        <visual>
+            <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.05" length="0.05"/>
+            </geometry>
+            <material name="Wheel">
+                <color rgba="0.8902 0 0.1804 1"/>
+            </material>
+        </visual>
+        <!-- Left wheel collision properties -->
+        <collision>
+            <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.05" length="0.05"/>
+            </geometry>
+        </collision>
+        <!-- Left wheel inertial properties -->
+        <inertial>
+            <mass value="1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.00083" ixy="0" ixz="0" iyy="0.00083" iyz="0" izz="0.00021" />
+        </inertial>
+    </link>
+    <!-- Right wheel --> 
+    <link name="right_wheel">
+        <!-- Right wheel visual properties -->
+        <visual>
+            <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.05" length="0.05"/>
+            </geometry>
+            <material name="Wheel">
+                <color rgba="0.8902 0 0.1804 1"/>
+            </material>
+        </visual>
+        <!-- Right wheel collision properties -->
+        <collision>
+            <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.05" length="0.05"/>
+            </geometry>
+        </collision>
+        <!-- Right wheel inertial properties -->
+        <inertial>
+            <mass value="1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.00083" ixy="0" ixz="0" iyy="0.00083" iyz="0" izz="0.00021" />
+        </inertial>
+    </link>
+    <!-- Front caster --> 
+    <link name="front_caster">
+        <!-- Front caster visual properties -->
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.025"/>
+            </geometry>
+            <material name="Wheel">
+                <color rgba="0.8902 0 0.1804 1"/>
+            </material>
+        </visual>
+        <!-- Front caster collision properties -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.025"/>
+            </geometry>
+        </collision>
+        <!-- Front caster inertial properties -->
+        <inertial>
+            <mass value="0.5" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.000125" ixy="0" ixz="0" iyy="0.000125" iyz="0" izz="0.000125" />
+        </inertial>
+    </link>
+    <!-- Back caster --> 
+    <link name="back_caster">
+        <!-- Back caster visual properties -->
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.025"/>
+            </geometry>
+            <material name="Wheel">
+                <color rgba="0.8902 0 0.1804 1"/>
+            </material>
+        </visual>
+        <!-- Back caster collision properties -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.025"/>
+            </geometry>
+        </collision>
+        <!-- Back caster inertial properties -->
+        <inertial>
+            <mass value="0.5" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.000125" ixy="0" ixz="0" iyy="0.000125" iyz="0" izz="0.000125" />
+        </inertial>
+    </link>
+    <!-- JOINT DEFINITIONS -->
+    <!-- Base : Base footprint -->
+    <joint name="base_link_base_footprint_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    </joint>
+    <!-- Front laser : Base -->
+    <joint name="front_laser_base_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="front_laser"/>
+        <origin xyz="0.25 0.0 0.075" rpy="3.1416 0 0"/>
+    </joint>
+    <!-- Left wheel : Base -->
+    <joint name="left_wheel_base_link_joint" type="continuous">
+        <origin rpy="0 0 0" xyz="0.0 0.2 -0.15" />
+        <child link="left_wheel" />
+        <parent link="base_link" />
+        <axis xyz="0 1 0" />
+    </joint>
+    <!-- Right wheel : Base -->
+    <joint name="right_wheel_base_link_joint" type="continuous">
+        <origin rpy="0 0 0" xyz="0.0 -0.2 -0.15" />
+        <child link="right_wheel" />
+        <parent link="base_link" />
+        <axis xyz="0 1 0" />
+    </joint>
+    <!-- Front caster : Base -->
+    <joint name="front_caster_base_link_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0.1 0.0 -0.175" />
+        <child link="front_caster" />
+        <parent link="base_link" />
+    </joint>
+    <!-- Back caster : Base -->
+    <joint name="back_caster_base_link_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="-0.1 0.0 -0.175" />
+        <child link="back_caster" />
+        <parent link="base_link" />
+    </joint>
+</robot>
