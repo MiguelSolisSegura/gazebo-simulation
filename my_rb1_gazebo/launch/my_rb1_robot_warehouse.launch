@@ -19,7 +19,7 @@
 
     <!-- Spawn the model from the parameter server -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" 
-          args="-param robot_description -urdf -model my_rb1_robot -x -0.4 -y -1.3"/>
+          args="-param robot_description -urdf -model my_rb1_robot -x -0.4 -y -1.3 -z 0.5"/>
      <!-- Send joint values -->
     <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
     <!-- Publish the TF transformations -->

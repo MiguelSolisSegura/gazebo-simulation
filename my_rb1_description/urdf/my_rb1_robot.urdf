@@ -22,9 +22,9 @@
         </collision>
         <!-- Base link inertial properties -->
         <inertial>
-            <mass value="22" />
+            <mass value="20" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.50875" ixy="0" ixz="0" iyy="0.50875" iyz="0" izz="0.11458" />
+            <inertia ixx="0.4625" ixy="0" ixz="0" iyy="0.4625" iyz="0" izz="0.625" />
         </inertial>
     </link>
     <!-- Base footprint -->
@@ -51,9 +51,9 @@
         </collision>
         <!-- Front laser inertial properties -->
         <inertial>
-            <mass value="0.25" />
+            <mass value="1" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001" />
+            <inertia ixx="0.00004" ixy="0" ixz="0" iyy="0.00004" iyz="0" izz="0.00004" />
         </inertial>
     </link>
     <!-- Left wheel --> 
@@ -79,7 +79,7 @@
         <inertial>
             <mass value="1" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.00083" ixy="0" ixz="0" iyy="0.00083" iyz="0" izz="0.00021" />
+            <inertia ixx="0.00083" ixy="0" ixz="0" iyy="0.00083" iyz="0" izz="0.00125" />
         </inertial>
     </link>
     <!-- Right wheel --> 
@@ -105,14 +105,14 @@
         <inertial>
             <mass value="1" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.00083" ixy="0" ixz="0" iyy="0.00083" iyz="0" izz="0.00021" />
+            <inertia ixx="0.00083" ixy="0" ixz="0" iyy="0.00083" iyz="0" izz="0.00125" />
         </inertial>
     </link>
     <!-- Front caster --> 
     <link name="front_caster">
         <!-- Front caster visual properties -->
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0 0" xyz="0 0 -0.025"/>
             <geometry>
                 <sphere radius="0.025"/>
             </geometry>
@@ -122,23 +122,40 @@
         </visual>
         <!-- Front caster collision properties -->
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0 0" xyz="0 0 -0.025"/>
             <geometry>
                 <sphere radius="0.025"/>
             </geometry>
         </collision>
+        <!-- Front caster housing visual properties -->
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.025"/>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="Wheel">
+                <color rgba="0.8902 0 0.1804 1"/>
+            </material>
+        </visual>
+        <!-- Front caster housing collision properties -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.025"/>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
         <!-- Front caster inertial properties -->
         <inertial>
-            <mass value="0.5" />
+            <mass value="1" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.000125" ixy="0" ixz="0" iyy="0.000125" iyz="0" izz="0.000125" />
+            <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.001" />
         </inertial>
     </link>
     <!-- Back caster --> 
     <link name="back_caster">
         <!-- Back caster visual properties -->
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0 0" xyz="0 0 -0.025"/>
             <geometry>
                 <sphere radius="0.025"/>
             </geometry>
@@ -148,16 +165,33 @@
         </visual>
         <!-- Back caster collision properties -->
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0 0" xyz="0 0 -0.025"/>
             <geometry>
                 <sphere radius="0.025"/>
             </geometry>
         </collision>
+        <!-- Back caster housing visual properties -->
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.025"/>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="Wheel">
+                <color rgba="0.8902 0 0.1804 1"/>
+            </material>
+        </visual>
+        <!-- Back caster housing collision properties -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.025"/>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
         <!-- Back caster inertial properties -->
         <inertial>
-            <mass value="0.5" />
+            <mass value="1" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.000125" ixy="0" ixz="0" iyy="0.000125" iyz="0" izz="0.000125" />
+            <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.001" />
         </inertial>
     </link>
     <!-- JOINT DEFINITIONS -->
@@ -192,13 +226,13 @@
     </joint>
     <!-- Front caster : Base -->
     <joint name="front_caster_base_link_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="0.1 0.0 -0.175" />
+        <origin rpy="0 0 0" xyz="0.1 0.0 -0.15" />
         <child link="front_caster" />
         <parent link="base_link" />
     </joint>
     <!-- Back caster : Base -->
     <joint name="back_caster_base_link_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="-0.1 0.0 -0.175" />
+        <origin rpy="0 0 0" xyz="-0.1 0.0 -0.15" />
         <child link="back_caster" />
         <parent link="base_link" />
     </joint>
