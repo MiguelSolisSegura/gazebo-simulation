@@ -176,4 +176,50 @@
         <child link="back_caster" />
         <parent link="base_link" />
     </joint>
+    <!-- GAZEBO CONFIGURATION -->
+    <!-- Base link color -->
+    <gazebo reference="base_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <!-- Base footprint friction -->
+    <gazebo reference="base_footprint">
+        <mu1>0</mu1>
+        <mu2>0</mu2>
+    </gazebo>
+    <!-- Left wheel color and friction --> 
+    <gazebo reference="left_wheel">
+        <material>Gazebo/Red</material>
+        <mu1>1</mu1>
+        <mu2>1</mu2>
+    </gazebo>
+    <!-- Right wheel color and friction --> 
+    <gazebo reference="right_wheel">
+        <material>Gazebo/Red</material>
+        <mu1>1</mu1>
+        <mu2>1</mu2>
+    </gazebo>
+    <!-- Front caster color and friction --> 
+    <gazebo reference="front_caster">
+        <material>Gazebo/Red</material>
+        <mu1>0</mu1>
+        <mu2>0</mu2>
+    </gazebo>
+    <!-- Back caster color and friction --> 
+    <gazebo reference="back_caster">
+        <material>Gazebo/Red</material>
+        <mu1>0</mu1>
+        <mu2>0</mu2>
+    </gazebo>
+    <!-- Front caster : Base -->
+    <gazebo reference="front_caster_base_link_joint">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+    <!-- Back caster : Base -->
+    <gazebo reference="back_caster_base_link_joint">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+    <!-- Front laser : Base --> 
+    <gazebo reference="front_laser_base_joint">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
 </robot>
