@@ -32,6 +32,29 @@
     </link>
     <!-- Front laser -->
     <link name="front_laser">
+        <!-- Front laser visual properties -->
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.01"/>
+            </geometry>
+            <material name="Laser">
+                <color rgba="0 1 0 1"/>
+            </material>
+        </visual>
+        <!-- Front laser collision properties -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.01"/>
+            </geometry>
+        </collision>
+        <!-- Front laser inertial properties -->
+        <inertial>
+            <mass value="0.25" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001" />
+        </inertial>
     </link>
     <!-- Left wheel --> 
     <link name="left_wheel">
@@ -140,9 +163,12 @@
     <!-- JOINT DEFINITIONS -->
     <!-- Base : Base footprint -->
     <joint name="base_link_base_footprint_joint" type="fixed">
+        <!-- Avoid Gazebo conflicts
         <parent link="base_footprint"/>
-        <child link="base_link"/>
-        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+        <child link="base_link"/> -->
+        <parent link="base_link"/>
+        <child link="base_footprint"/> 
+        <origin xyz="0 0 -0.2" rpy="0 0 0"/> 
     </joint>
     <!-- Front laser : Base -->
     <joint name="front_laser_base_joint" type="fixed">
@@ -221,5 +247,61 @@
     <!-- Front laser : Base --> 
     <gazebo reference="front_laser_base_joint">
         <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+    <!-- Base : Base footprint --> 
+    <gazebo reference="base_link_base_footprint_joint">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+    <!-- Front laser color --> 
+    <gazebo reference="front_laser">
+        <material>Gazebo/GreenGlow</material>
+    </gazebo>
+    <!-- Differential drive plugin -->
+    <gazebo>
+        <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20</updateRate>
+            <leftJoint>left_wheel_base_link_joint</leftJoint>
+            <rightJoint>right_wheel_base_link_joint</rightJoint>
+            <wheelSeparation>0.4</wheelSeparation>
+            <wheelDiameter>0.1</wheelDiameter>
+            <torque>10</torque>
+            <commandTopic>cmd_vel</commandTopic>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <robotBaseFrame>base_link</robotBaseFrame>
+        </plugin>
+    </gazebo>
+    <!-- Laser scan sensor -->
+    <gazebo reference="front_laser">
+        <sensor type="ray" name="head_hokuyo_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>20</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>720</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-1.570796</min_angle>
+                        <max_angle>1.570796</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.02</min>
+                    <max>10.0</max>
+                    <resolution>0.01</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>sensor_laser</frameName>
+            </plugin>
+        </sensor>
     </gazebo>
 </robot>
