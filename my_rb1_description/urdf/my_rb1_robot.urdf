@@ -112,7 +112,7 @@
     <link name="front_caster">
         <!-- Front caster visual properties -->
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 -0.025"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <sphere radius="0.025"/>
             </geometry>
@@ -122,16 +122,16 @@
         </visual>
         <!-- Front caster collision properties -->
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 -0.025"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <sphere radius="0.025"/>
             </geometry>
         </collision>
         <!-- Front caster housing visual properties -->
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 0.025"/>
+            <origin rpy="0 0 0" xyz="0 0 0.02"/>
             <geometry>
-                <sphere radius="0.05"/>
+                <sphere radius="0.03"/>
             </geometry>
             <material name="Wheel">
                 <color rgba="0.8902 0 0.1804 1"/>
@@ -139,9 +139,9 @@
         </visual>
         <!-- Front caster housing collision properties -->
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0.025"/>
+            <origin rpy="0 0 0" xyz="0 0 0.02"/>
             <geometry>
-                <sphere radius="0.05"/>
+                <sphere radius="0.03"/>
             </geometry>
         </collision>
         <!-- Front caster inertial properties -->
@@ -155,7 +155,7 @@
     <link name="back_caster">
         <!-- Back caster visual properties -->
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 -0.025"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <sphere radius="0.025"/>
             </geometry>
@@ -165,16 +165,16 @@
         </visual>
         <!-- Back caster collision properties -->
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 -0.025"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <sphere radius="0.025"/>
             </geometry>
         </collision>
         <!-- Back caster housing visual properties -->
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 0.025"/>
+            <origin rpy="0 0 0" xyz="0 0 0.02"/>
             <geometry>
-                <sphere radius="0.05"/>
+                <sphere radius="0.03"/>
             </geometry>
             <material name="Wheel">
                 <color rgba="0.8902 0 0.1804 1"/>
@@ -182,9 +182,9 @@
         </visual>
         <!-- Back caster housing collision properties -->
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0.025"/>
+            <origin rpy="0 0 0" xyz="0 0 0.02"/>
             <geometry>
-                <sphere radius="0.05"/>
+                <sphere radius="0.03"/>
             </geometry>
         </collision>
         <!-- Back caster inertial properties -->
@@ -197,9 +197,6 @@
     <!-- JOINT DEFINITIONS -->
     <!-- Base : Base footprint -->
     <joint name="base_link_base_footprint_joint" type="fixed">
-        <!-- Avoid Gazebo conflicts
-        <parent link="base_footprint"/>
-        <child link="base_link"/> -->
         <parent link="base_link"/>
         <child link="base_footprint"/> 
         <origin xyz="0 0 -0.2" rpy="0 0 0"/> 
@@ -226,13 +223,13 @@
     </joint>
     <!-- Front caster : Base -->
     <joint name="front_caster_base_link_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="0.1 0.0 -0.15" />
+        <origin rpy="0 0 0" xyz="0.1 0.0 -0.175" />
         <child link="front_caster" />
         <parent link="base_link" />
     </joint>
     <!-- Back caster : Base -->
     <joint name="back_caster_base_link_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="-0.1 0.0 -0.15" />
+        <origin rpy="0 0 0" xyz="-0.1 0.0 -0.175" />
         <child link="back_caster" />
         <parent link="base_link" />
     </joint>
