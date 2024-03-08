@@ -1,11 +1,9 @@
-#include "ros/publisher.h"
 #include "ros/ros.h"
 #include "my_rb1_ros/Rotate.h"
-#include "ros/subscriber.h"
 #include "nav_msgs/Odometry.h"
 #include "geometry_msgs/Twist.h"
 #include <cmath>
-
+#include <ros/console.h>
 
 class RotateService
 {
@@ -21,24 +19,35 @@ public:
         // Initialize the publisher
         pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 
-        ROS_INFO("Service server /rotate_robot started.");
+        ROS_INFO("Service server /rotate_robot is ready to use.");
     }
 
     bool handleRequest(my_rb1_ros::Rotate::Request &req,
                        my_rb1_ros::Rotate::Response &res) {
-        current_angle_ = quaternionZToDegrees(z_, w_);
-        while (current_angle_ != req.degrees) {
-            ROS_DEBUG("Current angle: %d", current_angle_);
-            cmd_.angular.z = (req.degrees > 0) ? 0.25 : -0.25;        
+
+        ROS_INFO("Service requested at /rotate_robot.");
+        ROS_INFO("Rotating %d degrees.", req.degrees);
+        try {
+            int current_angle = quaternionZToDegrees(z_, w_);
+            int degrees_to_rotate = std::abs(req.degrees);
+            cmd_.angular.z = (req.degrees > 0) ? 0.4 : -0.4;        
             pub_.publish(cmd_);
-            ros::spinOnce();
-            current_angle_ = quaternionZToDegrees(z_, w_);
+            while (degrees_to_rotate > 0) {
+                int new_angle = quaternionZToDegrees(z_, w_);
+                if (new_angle != current_angle) {
+                    degrees_to_rotate -= 1;
+                    current_angle = new_angle;
+                    ROS_DEBUG("Current angle: %d", current_angle);
+                }
+                ros::spinOnce();
+            }
+            ROS_INFO("The rotation has completed successfully.");
+            res.result = "Rotation service has completed successfully";
+            cmd_.angular.z = 0.0;
+            pub_.publish(cmd_);
+        } catch (...) {
+            res.result = "Rotation service has failed";
         }
-
-        res.result = "SUCCESSFUL";
-        cmd_.angular.z = 0.0;
-        pub_.publish(cmd_);
-
         return true;
     }
 
@@ -55,7 +64,6 @@ public:
         return angle;
     }
 
-
 private:
     ros::NodeHandle nh_;
     ros::ServiceServer serviceServer_;
@@ -63,12 +71,15 @@ private:
     ros::Subscriber sub_;
     float z_;
     float w_;
-    int current_angle_;
     geometry_msgs::Twist cmd_;
 };
 
 int main(int argc, char **argv)
 {
+    if( ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Info) ) 
+    {
+        ros::console::notifyLoggerLevelsChanged();
+    }
     ros::init(argc, argv, "rotate_service_server");
     RotateService server;
 
